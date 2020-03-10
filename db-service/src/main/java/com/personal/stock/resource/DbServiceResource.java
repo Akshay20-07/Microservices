@@ -16,6 +16,11 @@ import com.personal.stock.dbservice.model.Quotes;
 import com.personal.stock.dbservice.repository.QuoteRepository;
 
 
+/**
+ * Api for performing the DB-Service(MicroService) operations
+ * @author ezaksch
+ *
+ */
 @RestController
 @RequestMapping("/rest/db")
 public class DbServiceResource {
@@ -36,6 +41,29 @@ public class DbServiceResource {
 	}
 
 
+	/**
+	 * To delete the user details from catalog(db) stock 
+	 * @param username
+	 * @return
+	 */
+	@PostMapping("/delete/{username}")
+	public List<String> delete(@PathVariable("username") final String username){
+		
+		List<Quote> quotes=quoteRepo.findByUserName(username).stream()
+		.filter(quote -> quote.getUserName().equals(username)).collect(Collectors.toList());
+		
+		quoteRepo.deleteAll(quotes);
+		
+		return getQuotesByUserName(username);
+		
+	}
+	
+	
+	/**
+	 * To add the new user to the catalog
+	 * @param quotes
+	 * @return
+	 */
 	@PostMapping("/add")
 	public List<String> add(@RequestBody final Quotes quotes){
 		
