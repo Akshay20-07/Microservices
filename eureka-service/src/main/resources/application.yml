@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: eureka-service
+server:
+  port: 8083
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
